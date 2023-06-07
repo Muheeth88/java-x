@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xapp.xjava.entities.Movie;
 import com.xapp.xjava.services.MoviesService;
 
-import springfox.documentation.annotations.ApiIgnore;
-
 @RestController
 @RequestMapping("/movies")
 public class MovieController {
@@ -36,7 +34,6 @@ public class MovieController {
     ResponseEntity<List<Movie>> getAllMovies() {
         List<Movie> allMovies = moviesService.getAllMovies();
         return ResponseEntity.ok(allMovies);
-
     }
 
     @GetMapping("/{movieId}")
