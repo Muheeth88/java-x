@@ -34,7 +34,7 @@ public class ReviewController {
 	}
 
 	@PutMapping("/{reviewId}") 
-	ResponseEntity<Review> editReview(@PathVariable("reviewId") Long reviewId, @AuthenticationPrincipal CustomUserDetails user, @RequestBody EditReviewReq req ) {
+	ResponseEntity<Review> editReview(@PathVariable("reviewId") Long reviewId, @AuthenticationPrincipal CustomUserDetails user, @RequestBody EditReviewReq req ) throws Exception {
 		String userName = user.getUsername();
 		Review editedReview = reviewService.editReview(userName, reviewId, req);
 		return ResponseEntity.ok(editedReview);

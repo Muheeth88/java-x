@@ -30,7 +30,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody JwtRequest jwtRequest) throws Exception {
-
         try {
             this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getEmail(), jwtRequest.getPassword()));
         } catch (UsernameNotFoundException e) {

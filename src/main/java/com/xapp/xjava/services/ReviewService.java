@@ -33,7 +33,7 @@ public class ReviewService {
 		return reviewRepository.save(review);
 	}
 
-	public Review editReview(String userName, Long reviewId, EditReviewReq req) {
+	public Review editReview(String userName, Long reviewId, EditReviewReq req) throws Exception {
 		User userDetails = usersRepository.findByEmail(userName);
 		Optional<Review> currReviewOp = getReviewByReviewId(reviewId);
 		try {
@@ -45,11 +45,11 @@ public class ReviewService {
 					reviewRepository.save(currReview);
 				} else {
 					System.out.println("Not Your comment!!!");
+					return new Review();
 				}
 			} else {
 				System.out.println("Review Not Found!");
 			}
-	
 		} catch (Exception e) {
 			System.out.println("Something went wrong");
 		}
