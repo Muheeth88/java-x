@@ -56,7 +56,6 @@ public class UsersService {
             User modifiedUser = createUser(currentUser);
             return modifiedUser;
         }
-
         return null;
 
     }
