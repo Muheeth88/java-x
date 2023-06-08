@@ -16,30 +16,32 @@ import com.xapp.xjava.repositories.UsersRepository;
 
 @Service
 public class ReviewService {
-
-	@Autowired
-	private UsersRepository usersRepository;
 	
 	@Autowired
 	public ReviewRepository reviewRepository;
 	
-	public Review addReview(String userName, ReviewReq reviewrReq) {
-		User userDetails = usersRepository.findByEmail(userName);
-		Review review = new Review();
-		review.setMovieId(reviewrReq.getMovieId());
-		review.setTitle(reviewrReq.getTitle());
-		review.setComment(reviewrReq.getComment());
-		review.setUserId(userDetails.getUserId());
-		return reviewRepository.save(review);
+	public Review addReview(Long userId, ReviewReq reviewrReq) throws Exception {
+		try {
+			Review review = new Review();
+			review.setMovieId(reviewrReq.getMovieId());
+			review.setTitle(reviewrReq.getTitle());
+			review.setComment(reviewrReq.getComment());
+			review.setUserId(userId);
+			return reviewRepository.save(review);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 
-	public Review editReview(String userName, Long reviewId, EditReviewReq req) throws Exception {
-		User userDetails = usersRepository.findByEmail(userName);
+	public Review editReview(Long userId, Long reviewId, EditReviewReq req) throws Exception {
+	
 		Optional<Review> currReviewOp = getReviewByReviewId(reviewId);
 		try {
 			if(currReviewOp.isPresent()) {
 				Review currReview = currReviewOp.get();
-				if(userDetails.getUserId() == currReview.getUserId()) {
+				if(userId == currReview.getUserId()) {
 					currReview.setTitle(req.getTitle());
 					currReview.setComment(req.getComment());
 					reviewRepository.save(currReview);
@@ -71,6 +73,4 @@ public class ReviewService {
 		return review;
 	}
 
-
-		
 }

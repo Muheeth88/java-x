@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xapp.xjava.config.CustomUserDetails;
 import com.xapp.xjava.entities.Review;
+import com.xapp.xjava.entities.User;
 import com.xapp.xjava.models.EditReviewReq;
 import com.xapp.xjava.models.ReviewReq;
+import com.xapp.xjava.repositories.UsersRepository;
 import com.xapp.xjava.services.ReviewService;
 
 @RestController
@@ -26,17 +28,24 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 
+	@Autowired
+	private UsersRepository usersRepository;
+
 	@PostMapping("")
-	ResponseEntity<Review> addReview(@AuthenticationPrincipal CustomUserDetails user, @RequestBody ReviewReq req) {
+	ResponseEntity<Review> addReview(@AuthenticationPrincipal CustomUserDetails user, @RequestBody ReviewReq req) throws Exception {
 		String userName = user.getUsername();
-		Review savedReview = reviewService.addReview(userName, req);
+        User userDetails = usersRepository.findByEmail(userName);
+		Long userId = userDetails.getUserId();
+		Review savedReview = reviewService.addReview(userId, req);
 		return ResponseEntity.ok(savedReview);
 	}
 
 	@PutMapping("/{reviewId}") 
 	ResponseEntity<Review> editReview(@PathVariable("reviewId") Long reviewId, @AuthenticationPrincipal CustomUserDetails user, @RequestBody EditReviewReq req ) throws Exception {
 		String userName = user.getUsername();
-		Review editedReview = reviewService.editReview(userName, reviewId, req);
+		User userDetails = usersRepository.findByEmail(userName);
+		Long userId = userDetails.getUserId();
+		Review editedReview = reviewService.editReview(userId, reviewId, req);
 		return ResponseEntity.ok(editedReview);
 	}
 	
