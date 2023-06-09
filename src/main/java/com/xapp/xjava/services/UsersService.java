@@ -68,11 +68,9 @@ public class UsersService {
 
     public User addToWatchList(String userName, WatchlistReq req) throws Exception {
         try {
-            User currentUser = getUser(userName);
-            Optional<Movie> currentMovieOp = moviesService.getMovieById(req.getMovieId());
-            Movie currMovie = currentMovieOp.get();
-            List<Movie> watchList = currentUser.getWatchList();
-            watchList.add(currMovie);
+            User currentUser = getUser(userName);          
+            List<Long> watchList = currentUser.getWatchList();
+            watchList.add(req.getMovieId());
             currentUser.setWatchList(watchList);
             User modifiedUser = createUser(currentUser);
             return modifiedUser;

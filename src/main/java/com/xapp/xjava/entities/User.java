@@ -31,7 +31,7 @@ public class User {
     private String role;
 
     @ElementCollection
-    private List<Movie> watchList;
+    private List<Long> watchList;
 
     @ElementCollection
     private List<Movie> likes;
