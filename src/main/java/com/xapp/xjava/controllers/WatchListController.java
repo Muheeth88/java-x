@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xapp.xjava.config.CustomUserDetails;
 import com.xapp.xjava.entities.User;
-import com.xapp.xjava.models.WatchlistReq;
+import com.xapp.xjava.models.MovieIdReq;
 import com.xapp.xjava.repositories.UsersRepository;
 import com.xapp.xjava.services.UsersService;
 
@@ -24,7 +24,7 @@ public class WatchListController {
     private UsersService usersService;
 
     @PostMapping("")
-    ResponseEntity<User> handleWatchList(@AuthenticationPrincipal CustomUserDetails user, @RequestBody WatchlistReq req) throws Exception {
+    ResponseEntity<User> handleWatchList(@AuthenticationPrincipal CustomUserDetails user, @RequestBody MovieIdReq req) throws Exception {
         String userName = user.getUsername();
         User newUser = usersService.handleWatchList(userName, req);
         return ResponseEntity.ok(newUser);

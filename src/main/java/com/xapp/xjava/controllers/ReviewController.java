@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,9 +18,12 @@ import com.xapp.xjava.config.CustomUserDetails;
 import com.xapp.xjava.entities.Review;
 import com.xapp.xjava.entities.User;
 import com.xapp.xjava.models.EditReviewReq;
+import com.xapp.xjava.models.MovieIdReq;
+import com.xapp.xjava.models.ReviewIdReq;
 import com.xapp.xjava.models.ReviewReq;
 import com.xapp.xjava.repositories.UsersRepository;
 import com.xapp.xjava.services.ReviewService;
+import com.xapp.xjava.services.UsersService;
 
 @RestController
 @RequestMapping("/movies/review")
@@ -30,6 +34,10 @@ public class ReviewController {
 
 	@Autowired
 	private UsersRepository usersRepository;
+
+	
+    @Autowired
+    private UsersService usersService;
 
 	@PostMapping("")
 	ResponseEntity<Review> addReview(@AuthenticationPrincipal CustomUserDetails user, @RequestBody ReviewReq req) throws Exception {
@@ -61,5 +69,14 @@ public class ReviewController {
 	ResponseEntity<List<Review>> getReviewsByMovie(@PathVariable("movieId") Long movieId) {
 		List<Review> movieReviews = reviewService.getReviewsByMovie(movieId);
 		return ResponseEntity.ok(movieReviews);
+	}
+
+	@DeleteMapping("")
+	ResponseEntity<?> deleteReview(@AuthenticationPrincipal CustomUserDetails user, @RequestBody ReviewIdReq req ) {
+		String userName = user.getUsername();
+		User userDetails = usersRepository.findByEmail(userName);
+		Long userId = userDetails.getUserId();
+        reviewService.deleteReview(userId, req);
+		return  ResponseEntity.noContent().build();
 	}
 }

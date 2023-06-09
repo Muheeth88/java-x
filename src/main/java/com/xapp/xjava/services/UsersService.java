@@ -9,7 +9,7 @@ import org.yaml.snakeyaml.util.ArrayUtils;
 
 import com.xapp.xjava.entities.Movie;
 import com.xapp.xjava.entities.User;
-import com.xapp.xjava.models.WatchlistReq;
+import com.xapp.xjava.models.MovieIdReq;
 import com.xapp.xjava.repositories.UsersRepository;
 
 @Service
@@ -66,7 +66,7 @@ public class UsersService {
 
     }
 
-    public User handleWatchList(String userName, WatchlistReq req) throws Exception {
+    public User handleWatchList(String userName, MovieIdReq req) throws Exception {
         try {
             User currentUser = getUser(userName);          
             List<Long> watchList = currentUser.getWatchList();
@@ -85,7 +85,7 @@ public class UsersService {
         }
     }
     
-    public User handleLikes(String userName, WatchlistReq req) throws Exception {
+    public User handleLikes(String userName, MovieIdReq req) throws Exception {
         try {
             User currentUser = getUser(userName);          
             List<Long> likes = currentUser.getLikes();

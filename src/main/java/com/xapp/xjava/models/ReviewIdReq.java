@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WatchlistReq {
-    Long movieId;
+public class ReviewIdReq {
+      Long reviewId;
 }
