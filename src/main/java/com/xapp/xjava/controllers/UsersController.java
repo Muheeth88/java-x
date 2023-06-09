@@ -24,7 +24,7 @@ public class UsersController {
     private UsersService usersService;
 
     @PostMapping("")
-    ResponseEntity<User> createTask(@RequestBody User req) {
+    ResponseEntity<User> createUser(@RequestBody User req) {
         User newUser = usersService.createUser(req);
         return ResponseEntity.ok(newUser);
     }
