@@ -22,9 +22,9 @@ public class LikeController {
     private UsersService usersService;
 
     @PostMapping("")
-    ResponseEntity<User> addToLikes(@AuthenticationPrincipal CustomUserDetails user, @RequestBody WatchlistReq req) throws Exception {
+    ResponseEntity<User> handleLikes(@AuthenticationPrincipal CustomUserDetails user, @RequestBody WatchlistReq req) throws Exception {
         String userName = user.getUsername();
-        User newUser = usersService.addToLikes(userName, req);
+        User newUser = usersService.handleLikes(userName, req);
         return ResponseEntity.ok(newUser);
     }
 }

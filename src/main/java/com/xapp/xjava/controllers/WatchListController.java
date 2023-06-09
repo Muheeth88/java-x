@@ -20,16 +20,13 @@ import com.xapp.xjava.services.UsersService;
 @RequestMapping("/movies/watchlist")
 public class WatchListController {
     
-	@Autowired
-	private UsersRepository usersRepository;
-
     @Autowired
     private UsersService usersService;
 
     @PostMapping("")
-    ResponseEntity<User> addToWatchlist(@AuthenticationPrincipal CustomUserDetails user, @RequestBody WatchlistReq req) throws Exception {
+    ResponseEntity<User> handleWatchList(@AuthenticationPrincipal CustomUserDetails user, @RequestBody WatchlistReq req) throws Exception {
         String userName = user.getUsername();
-        User newUser = usersService.addToWatchList(userName, req);
+        User newUser = usersService.handleWatchList(userName, req);
         return ResponseEntity.ok(newUser);
     }
 }

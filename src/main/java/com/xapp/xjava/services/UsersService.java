@@ -66,11 +66,15 @@ public class UsersService {
 
     }
 
-    public User addToWatchList(String userName, WatchlistReq req) throws Exception {
+    public User handleWatchList(String userName, WatchlistReq req) throws Exception {
         try {
             User currentUser = getUser(userName);          
             List<Long> watchList = currentUser.getWatchList();
-            watchList.add(req.getMovieId());
+            if(watchList.contains(req.getMovieId())) {
+                watchList.remove(req.getMovieId());
+            } else {
+                watchList.add(req.getMovieId());
+            }
             currentUser.setWatchList(watchList);
             User modifiedUser = createUser(currentUser);
             return modifiedUser;
@@ -79,14 +83,17 @@ public class UsersService {
             System.out.println("Something Went wrong in Service!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return null;
         }
-
     }
-
-     public User addToLikes(String userName, WatchlistReq req) throws Exception {
+    
+    public User handleLikes(String userName, WatchlistReq req) throws Exception {
         try {
             User currentUser = getUser(userName);          
             List<Long> likes = currentUser.getLikes();
-            likes.add(req.getMovieId());
+            if(likes.contains(req.getMovieId())) {
+                likes.remove(req.getMovieId());
+            } else {
+                likes.add(req.getMovieId());
+            }
             currentUser.setLikes(likes);
             User modifiedUser = createUser(currentUser);
             return modifiedUser;
@@ -95,7 +102,7 @@ public class UsersService {
             System.out.println("Something Went wrong in Service, while liking!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return null;
         }
-
     }
+
 
 }
