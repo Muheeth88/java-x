@@ -40,7 +40,7 @@ public class MovieController {
 
     @GetMapping("/{movieId}")
     ResponseEntity<Optional<Movie>> getUser(@PathVariable("movieId") Long movieId) {
-        Optional<Movie> movie = moviesService.getUser(movieId);
+        Optional<Movie> movie = moviesService.getMovieById(movieId);
         return ResponseEntity.ok(movie);
     }
 

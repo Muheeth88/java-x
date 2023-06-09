@@ -5,8 +5,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.util.ArrayUtils;
 
+import com.xapp.xjava.entities.Movie;
 import com.xapp.xjava.entities.User;
+import com.xapp.xjava.models.WatchlistReq;
 import com.xapp.xjava.repositories.UsersRepository;
 
 @Service
@@ -14,6 +17,9 @@ public class UsersService {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private MoviesService moviesService;
 
     // ------------- create user
     public User createUser(User user) {
@@ -35,15 +41,15 @@ public class UsersService {
     }
 
     // public Optional<User> getUser(String userName) {
-    //     Optional<User> user = usersRepository.findByUserName(userName);
-    //     return user;
+    // Optional<User> user = usersRepository.findByUserName(userName);
+    // return user;
     // }
 
     public User getUser(String email) {
         User user = usersRepository.findByEmail(email);
         return user;
     }
-    
+
     public User editUser(Long userId, User user) {
         Optional<User> currentUserOp = getUser(userId);
         if (currentUserOp.isPresent()) {
@@ -57,6 +63,24 @@ public class UsersService {
             return modifiedUser;
         }
         return null;
+
+    }
+
+    public User addToWatchList(String userName, WatchlistReq req) throws Exception {
+        try {
+            User currentUser = getUser(userName);
+            Optional<Movie> currentMovieOp = moviesService.getMovieById(req.getMovieId());
+            Movie currMovie = currentMovieOp.get();
+            List<Movie> watchList = currentUser.getWatchList();
+            watchList.add(currMovie);
+            currentUser.setWatchList(watchList);
+            User modifiedUser = createUser(currentUser);
+            return modifiedUser;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Something Went wrong in Service!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            return null;
+        }
 
     }
 

@@ -25,8 +25,8 @@ public class MoviesService {
         return allMovies;
     }
 
-    public Optional<Movie> getUser(Long userId) {
-        Optional<Movie> movie = moviesRepository.findById(userId);
+    public Optional<Movie> getMovieById(Long movieId) {
+        Optional<Movie> movie = moviesRepository.findById(movieId);
         return movie;
     }
 
