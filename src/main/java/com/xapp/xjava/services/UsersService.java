@@ -82,4 +82,20 @@ public class UsersService {
 
     }
 
+     public User addToLikes(String userName, WatchlistReq req) throws Exception {
+        try {
+            User currentUser = getUser(userName);          
+            List<Long> likes = currentUser.getLikes();
+            likes.add(req.getMovieId());
+            currentUser.setLikes(likes);
+            User modifiedUser = createUser(currentUser);
+            return modifiedUser;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Something Went wrong in Service, while liking!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            return null;
+        }
+
+    }
+
 }

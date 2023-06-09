@@ -34,6 +34,6 @@ public class User {
     private List<Long> watchList;
 
     @ElementCollection
-    private List<Movie> likes;
+    private List<Long> likes;
 
 }

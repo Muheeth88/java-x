@@ -36,6 +36,7 @@ public class Task {
     @OneToOne(cascade = CascadeType.ALL
     // fetch = FetchType.LAZY
     )
+    
     @JoinColumn(name = "asset_id", referencedColumnName = "assetId")
     private Assets assets;
 
