@@ -1,5 +1,6 @@
 package com.xapp.xjava.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,6 +103,21 @@ public class UsersService {
             System.out.println("Something Went wrong in Service, while liking!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return null;
         }
+    }
+
+    public List<Movie> getMyWatchlist(String userName) {
+        User user = this.getUser(userName);
+        List<Long> watchlistIds = user.getWatchList();
+        List<Movie> myWatchList = new ArrayList<>();
+
+        for(int i = 0; i < watchlistIds.size(); i++) {
+            Optional<Movie> currentMovieOp = moviesService.getMovieById(watchlistIds.get(i));
+            Movie currentMovie = currentMovieOp.get();
+            myWatchList.add(currentMovie);
+        }
+       
+        return myWatchList;
+
     }
 
 
