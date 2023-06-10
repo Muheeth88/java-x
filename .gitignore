@@ -31,3 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+
+# ---------------------------------------- To DOs
+# # Encrypting the Passwords
+# # Adding date logs
+# # Learn and Implement Pagination
+# # Filtering and sorting
+# # Exception Handling
+# # Add User logs
+# # Only Admin can delete user (#code not working)
