@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.util.ArrayUtils;
 
 import com.xapp.xjava.entities.Movie;
 import com.xapp.xjava.entities.User;
@@ -34,7 +33,7 @@ public class UsersService {
         return allUsers;
     }
 
-    // ----------------- get user
+    // ----------------- get user by User Id
     public Optional<User> getUser(Long userId) {
         Optional<User> user = usersRepository.findById(userId);
         // UserEntity user = usersRepository.findByUserId();
@@ -46,11 +45,13 @@ public class UsersService {
     // return user;
     // }
 
+    // ---------------------------- Get User by Email
     public User getUser(String email) {
         User user = usersRepository.findByEmail(email);
         return user;
     }
 
+    // ------------------------- Edit User
     public User editUser(Long userId, User user) {
         Optional<User> currentUserOp = getUser(userId);
         if (currentUserOp.isPresent()) {
@@ -67,6 +68,7 @@ public class UsersService {
 
     }
 
+    // ------------------------------- Handle WatchList
     public User handleWatchList(String userName, MovieIdReq req) throws Exception {
         try {
             User currentUser = getUser(userName);          
@@ -86,6 +88,7 @@ public class UsersService {
         }
     }
     
+    // ------------------------------- Handle Likes
     public User handleLikes(String userName, MovieIdReq req) throws Exception {
         try {
             User currentUser = getUser(userName);          
@@ -105,6 +108,7 @@ public class UsersService {
         }
     }
 
+    //------------------------------------- Get My Watch List
     public List<Movie> getMyWatchlist(String userName) {
         User user = this.getUser(userName);
         List<Long> watchlistIds = user.getWatchList();
@@ -115,10 +119,21 @@ public class UsersService {
             Movie currentMovie = currentMovieOp.get();
             myWatchList.add(currentMovie);
         }
-       
         return myWatchList;
-
     }
 
+    // ------------------------------- Get My Like List
+    public List<Movie> getMyLikelist(String userName) {
+        User user = this.getUser(userName);
+        List<Long> likeIds = user.getLikes();
+        List<Movie> myLikeList = new ArrayList<>();
+
+        for(int i = 0; i < likeIds.size(); i++) {
+            Optional<Movie> currentMovieOp = moviesService.getMovieById(likeIds.get(i));
+            Movie currentMovie = currentMovieOp.get();
+            myLikeList.add(currentMovie);
+        }
+        return myLikeList;
+    }
 
 }
