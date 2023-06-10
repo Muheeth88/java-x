@@ -39,9 +39,8 @@ public class ReviewService {
 	public Review editReview(Long userId, Long reviewId, EditReviewReq req) throws Exception {
 
 		Optional<Review> currReviewOp = getReviewByReviewId(reviewId);
+		Review currReview = currReviewOp.get();
 		try {
-
-			Review currReview = currReviewOp.get();
 			if (userId == currReview.getUserId()) {
 				currReview.setTitle(req.getTitle());
 				currReview.setComment(req.getComment());

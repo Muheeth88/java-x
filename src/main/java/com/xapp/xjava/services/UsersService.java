@@ -1,15 +1,18 @@
 package com.xapp.xjava.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import com.xapp.xjava.entities.Movie;
 import com.xapp.xjava.entities.User;
 import com.xapp.xjava.models.MovieIdReq;
+import com.xapp.xjava.models.UserIdReq;
 import com.xapp.xjava.repositories.UsersRepository;
 
 @Service
@@ -66,6 +69,23 @@ public class UsersService {
         }
         return null;
 
+    }
+
+    // -------------------------------- Delete User
+    public void deleteUser(String role, UserIdReq req) {
+        System.out.println(role);
+        // if(role == "ADMIN") {
+            try {
+                usersRepository.deleteById(req.getUserId());
+                System.out.println("User Deleted!!!!!!!!!!!!!!!!");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Something went wrong in Service!");
+            }
+        // } else {
+        //     System.out.println("You are not an Adminx!!");
+        //     System.out.println("User not deleted!!");
+        // }
     }
 
     // ------------------------------- Handle WatchList
