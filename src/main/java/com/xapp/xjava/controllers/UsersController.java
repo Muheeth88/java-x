@@ -67,10 +67,16 @@ public class UsersController {
 
     @DeleteMapping("")
     ResponseEntity<?> deleteUser(@AuthenticationPrincipal CustomUserDetails user, @RequestBody UserIdReq req) {
-      	String userName = user.getUsername();
-		User userDetails = usersRepository.findByEmail(userName);
-		String role = userDetails.getRole();
-        usersService.deleteUser(role, req);
+      
+        String userName = user.getUsername();
+        User userDetails = usersRepository.findByEmail(userName);
+        System.out.println(userDetails.getRole());
+        // if(userDetails.getRole() == "ADMIN") {
+            usersService.deleteUser(req);
+        // } else {
+        //     System.out.println("You are not an Admin to delete a user!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //     return null;
+        // }
         return  ResponseEntity.noContent().build();
     }
 

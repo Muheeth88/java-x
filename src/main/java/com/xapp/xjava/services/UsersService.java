@@ -72,20 +72,14 @@ public class UsersService {
     }
 
     // -------------------------------- Delete User
-    public void deleteUser(String role, UserIdReq req) {
-        System.out.println(role);
-        // if(role == "ADMIN") {
-            try {
-                usersRepository.deleteById(req.getUserId());
-                System.out.println("User Deleted!!!!!!!!!!!!!!!!");
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Something went wrong in Service!");
-            }
-        // } else {
-        //     System.out.println("You are not an Adminx!!");
-        //     System.out.println("User not deleted!!");
-        // }
+    public void deleteUser(UserIdReq req) {
+        try {
+            usersRepository.deleteById(req.getUserId());
+            System.out.println("User Deleted!!!!!!!!!!!!!!!!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Something went wrong in Service!");
+        }
     }
 
     // ------------------------------- Handle WatchList
