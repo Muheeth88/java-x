@@ -26,6 +26,7 @@ public class UsersService {
 
     // ------------- create user
     public User createUser(User user) {
+        user.setRole("USER");
         User newUser = usersRepository.save(user);
         return newUser;
     }

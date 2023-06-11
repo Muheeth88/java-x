@@ -7,16 +7,21 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xapp.xjava.config.CustomUserDetailsService;
+import com.xapp.xjava.entities.User;
+import com.xapp.xjava.models.JSONLogin;
 import com.xapp.xjava.models.JwtRequest;
 import com.xapp.xjava.models.JwtResponse;
+import com.xapp.xjava.repositories.UsersRepository;
 import com.xapp.xjava.utility.JwtUtility;
 
 @RestController
+@CrossOrigin("*")
 public class LoginController {
 
     @Autowired
@@ -27,6 +32,9 @@ public class LoginController {
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
+
+      @Autowired
+	private UsersRepository usersRepository;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody JwtRequest jwtRequest) throws Exception {
@@ -40,9 +48,13 @@ public class LoginController {
         }
 
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(jwtRequest.getEmail());
+        User user = usersRepository.findByEmail(jwtRequest.getEmail());
         String token = this.jwtUtility.generateToken(userDetails);
-        System.out.println("JWT " + token);
+        JSONLogin loginObj = new JSONLogin();
+        loginObj.setToken(token);
+        loginObj.setUser(user);
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(loginObj);
+        // return ResponseEntity.ok(new JwtResponse(token));
     }
 }
