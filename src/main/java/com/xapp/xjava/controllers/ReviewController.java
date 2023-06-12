@@ -71,12 +71,12 @@ public class ReviewController {
 		return ResponseEntity.ok(movieReviews);
 	}
 
-	@DeleteMapping("")
-	ResponseEntity<?> deleteReview(@AuthenticationPrincipal CustomUserDetails user, @RequestBody ReviewIdReq req ) {
+	@DeleteMapping("/{reviewId}")
+	ResponseEntity<?> deleteReview(@AuthenticationPrincipal CustomUserDetails user, @PathVariable("reviewId") Long reviewId ) {
 		String userName = user.getUsername();
 		User userDetails = usersRepository.findByEmail(userName);
 		Long userId = userDetails.getUserId();
-        reviewService.deleteReview(userId, req);
+        reviewService.deleteReview(userId, reviewId);
 		return  ResponseEntity.noContent().build();
 	}
 }

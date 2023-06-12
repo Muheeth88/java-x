@@ -55,15 +55,15 @@ public class ReviewService {
 		return null;
 	}
 
-	public Review deleteReview(Long userId, ReviewIdReq req) {
+	public Review deleteReview(Long userId, Long reviewId) {
 
 		try {
-			Optional<Review> currReviewOp = getReviewByReviewId(req.getReviewId());
+			Optional<Review> currReviewOp = getReviewByReviewId(reviewId);
 			Review currReview = currReviewOp.get();
 
 			try {
 				if (userId == currReview.getUserId()) {
-					reviewRepository.deleteById(req.getReviewId());
+					reviewRepository.deleteById(reviewId);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
