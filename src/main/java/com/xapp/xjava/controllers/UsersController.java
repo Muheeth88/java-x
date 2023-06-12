@@ -73,12 +73,12 @@ public class UsersController {
         String userName = user.getUsername();
         User userDetails = usersRepository.findByEmail(userName);
         System.out.println(userDetails.getRole());
-        // if(userDetails.getRole() == "ADMIN") {
+        if(userDetails.getRole().equalsIgnoreCase("ADMIN")) {
             usersService.deleteUser(req);
-        // } else {
-        //     System.out.println("You are not an Admin to delete a user!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        //     return null;
-        // }
+        } else {
+            System.out.println("You are not an Admin to delete a user!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            return null;
+        }
         return  ResponseEntity.noContent().build();
     }
 

@@ -60,7 +60,6 @@ public class ReviewService {
 		try {
 			Optional<Review> currReviewOp = getReviewByReviewId(reviewId);
 			Review currReview = currReviewOp.get();
-
 			try {
 				if (userId == currReview.getUserId()) {
 					reviewRepository.deleteById(reviewId);
@@ -72,9 +71,7 @@ public class ReviewService {
 		} catch (Exception e) {
 				System.out.println("Something Went Wrong In Optional");
 		}
-
 		
-
 		return null;
 	}
 
