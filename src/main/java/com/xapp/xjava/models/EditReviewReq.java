@@ -11,4 +11,5 @@ public class EditReviewReq {
     private Long movieId;
     private String title;
 	private String comment;
+    private String reviewBy;
 };

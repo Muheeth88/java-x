@@ -39,7 +39,7 @@ public class ReviewController {
 		String userName = user.getUsername();
         User userDetails = usersRepository.findByEmail(userName);
 		Long userId = userDetails.getUserId();
-		Review savedReview = reviewService.addReview(userId, req);
+		Review savedReview = reviewService.addReview(userName, userId, req);
 		return ResponseEntity.ok(savedReview);
 	}
 

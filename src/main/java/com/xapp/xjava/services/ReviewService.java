@@ -21,9 +21,10 @@ public class ReviewService {
 	@Autowired
 	public ReviewRepository reviewRepository;
 
-	public Review addReview(Long userId, ReviewReq reviewrReq) throws Exception {
+	public Review addReview(String userName, Long userId, ReviewReq reviewrReq) throws Exception {
 		try {
 			Review review = new Review();
+			review.setReviewBy(userName);
 			review.setMovieId(reviewrReq.getMovieId());
 			review.setTitle(reviewrReq.getTitle());
 			review.setComment(reviewrReq.getComment());
@@ -71,7 +72,7 @@ public class ReviewService {
 		} catch (Exception e) {
 				System.out.println("Something Went Wrong In Optional");
 		}
-		
+
 		return null;
 	}
 

@@ -24,6 +24,8 @@ public class Review {
 
 	private String comment;
 
+	private String reviewBy;
+
 	// @ManyToOne(cascade = CascadeType.ALL)
 	// @JoinColumn(name="movie_id", referencedColumnName = "movieId")
 	private Long movieId;
