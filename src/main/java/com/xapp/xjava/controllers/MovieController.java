@@ -48,7 +48,7 @@ public class MovieController {
     ResponseEntity<Movie> addMovie(@AuthenticationPrincipal CustomUserDetails user, @RequestBody Movie req) throws Exception {
         String userName = user.getUsername();
         User userDetails = usersRepository.findByEmail(userName);
-        if(userDetails.getRole() == "ADMIN") {
+        if(userDetails.getRole().equalsIgnoreCase("ADMIN")) {
             Movie newMovie = moviesService.addMovie(req);
             return ResponseEntity.ok(newMovie);
         } else {
