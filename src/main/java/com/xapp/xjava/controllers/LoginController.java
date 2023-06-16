@@ -42,6 +42,7 @@ public class LoginController {
             this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getEmail(), jwtRequest.getPassword()));
         } catch (UsernameNotFoundException e) {
             e.printStackTrace();
+            
             throw new Exception("Wrong Credentials!");
         } catch (BadCredentialsException e) {
             throw new Exception("Wrong Credentials!!!");
@@ -55,6 +56,5 @@ public class LoginController {
         loginObj.setUser(user);
 
         return ResponseEntity.ok(loginObj);
-        // return ResponseEntity.ok(new JwtResponse(token));
     }
 }

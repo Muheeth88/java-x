@@ -3,9 +3,13 @@ package com.xapp.xjava.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.integration.IntegrationProperties.Error;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,9 +33,6 @@ public class MovieController {
     @Autowired
     private MoviesService moviesService;
 
-    @Autowired
-	private UsersRepository usersRepository;
-
     @GetMapping("")
     ResponseEntity<List<Movie>> getAllMovies() {
         List<Movie> allMovies = moviesService.getAllMovies();
@@ -45,15 +46,9 @@ public class MovieController {
     }
 
     @PostMapping("")
-    ResponseEntity<Movie> addMovie(@AuthenticationPrincipal CustomUserDetails user, @RequestBody Movie req) throws Exception {
-        String userName = user.getUsername();
-        User userDetails = usersRepository.findByEmail(userName);
-        if(userDetails.getRole().equalsIgnoreCase("ADMIN")) {
-            Movie newMovie = moviesService.addMovie(req);
-            return ResponseEntity.ok(newMovie);
-        } else {
-            System.out.println("You are not an Admin!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            return null;
-        }
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Movie> addMovie(@AuthenticationPrincipal CustomUserDetails user, @RequestBody Movie req) throws Exception {
+        Movie newMovie = moviesService.addMovie(req);
+        return ResponseEntity.ok(newMovie);
     }
 }

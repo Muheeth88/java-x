@@ -1,7 +1,9 @@
 package com.xapp.xjava.config;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,17 +11,30 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.xapp.xjava.entities.User;
 
-public class CustomUserDetails implements UserDetails{
+public class CustomUserDetails implements UserDetails {
 
     private User user;
+
     public CustomUserDetails(User user) {
         super();
         this.user = user;
     }
 
+    // @Override
+    // public Collection<? extends GrantedAuthority> getAuthorities() {
+    //     return Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
+    // }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
+        List<SimpleGrantedAuthority> list = new ArrayList<>();
+        List<String> roles = user.getRoles();
+        for (String role : roles) {
+            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
+            list.add(authority);
+        }
+        System.out.println("from Custom User Details" + list + "-------------------------------------------");
+        return list;
     }
 
     @Override
@@ -38,7 +53,7 @@ public class CustomUserDetails implements UserDetails{
     }
 
     @Override
-    public boolean isAccountNonLocked() { 
+    public boolean isAccountNonLocked() {
         return true;
     }
 
@@ -52,6 +67,4 @@ public class CustomUserDetails implements UserDetails{
         return true;
     }
 
-    
-    
 }

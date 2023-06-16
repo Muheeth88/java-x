@@ -26,7 +26,9 @@ public class UsersService {
 
     // ------------- create user
     public User createUser(User user) {
-        user.setRole("USER");
+        List<String> role = user.getRoles();
+        role.add("USER");
+        user.setRoles(role);
         User newUser = usersRepository.save(user);
         return newUser;
     }
@@ -64,7 +66,7 @@ public class UsersService {
             currentUser.setDateOfBirth(user.getDateOfBirth());
             currentUser.setEmail(user.getEmail());
             currentUser.setPassword(user.getPassword());
-            currentUser.setRole(user.getRole());
+            currentUser.setRoles(user.getRoles());
             User modifiedUser = createUser(currentUser);
             return modifiedUser;
         }
