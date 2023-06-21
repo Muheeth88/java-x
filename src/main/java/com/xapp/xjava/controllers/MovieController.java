@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xapp.xjava.config.CustomUserDetails;
 import com.xapp.xjava.entities.Movie;
 import com.xapp.xjava.entities.User;
+import com.xapp.xjava.models.PageResponse;
 import com.xapp.xjava.repositories.UsersRepository;
 import com.xapp.xjava.services.MoviesService;
 
@@ -34,9 +36,13 @@ public class MovieController {
     private MoviesService moviesService;
 
     @GetMapping("")
-    ResponseEntity<List<Movie>> getAllMovies() {
-        List<Movie> allMovies = moviesService.getAllMovies();
-        return ResponseEntity.ok(allMovies);
+    ResponseEntity<PageResponse> getAllMovies(
+        @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+        @RequestParam(value = "pageSize", defaultValue = "100", required = false ) Integer pageSize,
+        @RequestParam(value = "orderBy", defaultValue = "id", required = false)  String orderBy
+    ) {
+        PageResponse pageResponse = moviesService.getAllMovies(pageNumber, pageSize, orderBy);
+        return ResponseEntity.ok(pageResponse);
     }
 
     @GetMapping("/{movieId}")
