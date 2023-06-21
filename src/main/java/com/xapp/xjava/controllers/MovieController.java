@@ -39,9 +39,10 @@ public class MovieController {
     ResponseEntity<PageResponse> getAllMovies(
         @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
         @RequestParam(value = "pageSize", defaultValue = "100", required = false ) Integer pageSize,
-        @RequestParam(value = "orderBy", defaultValue = "id", required = false)  String orderBy
+        @RequestParam(value = "orderBy", defaultValue = "movieId", required = false)  String orderBy,
+        @RequestParam(value = "sortDirection", defaultValue = "asc", required = false)  String sortDirection
     ) {
-        PageResponse pageResponse = moviesService.getAllMovies(pageNumber, pageSize, orderBy);
+        PageResponse pageResponse = moviesService.getAllMovies(pageNumber, pageSize, orderBy, sortDirection);
         return ResponseEntity.ok(pageResponse);
     }
 
@@ -57,4 +58,6 @@ public class MovieController {
         Movie newMovie = moviesService.addMovie(req);
         return ResponseEntity.ok(newMovie);
     }
+
+
 }

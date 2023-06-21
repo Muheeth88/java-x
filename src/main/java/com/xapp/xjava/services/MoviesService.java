@@ -25,8 +25,11 @@ public class MoviesService {
         return moviesRepository.save(newMovie);
     }
 
-    public PageResponse getAllMovies(Integer pageNumber, Integer pageSize, String orderBy) {
-        Pageable page = PageRequest.of(pageNumber, pageSize, Sort.by(orderBy));
+    public PageResponse getAllMovies(Integer pageNumber, Integer pageSize, String orderBy, String sortDirection) {
+
+        Sort sort = (sortDirection.equalsIgnoreCase("asc")) ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
+
+        Pageable page = PageRequest.of(pageNumber, pageSize, sort);
         Page<Movie> pageMovies = moviesRepository.findAll(page);
         List<Movie> allMovies =  pageMovies.getContent();
         PageResponse pageResponse = new PageResponse();
