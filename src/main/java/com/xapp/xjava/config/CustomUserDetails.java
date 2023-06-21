@@ -33,7 +33,6 @@ public class CustomUserDetails implements UserDetails {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
             list.add(authority);
         }
-        System.out.println("from Custom User Details" + list + "-------------------------------------------");
         return list;
     }
 

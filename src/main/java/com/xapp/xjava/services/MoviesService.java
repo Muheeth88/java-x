@@ -16,7 +16,6 @@ public class MoviesService {
     private MoviesRepository moviesRepository;
 
     public Movie addMovie(Movie newMovie) {
-
         return moviesRepository.save(newMovie);
     }
 

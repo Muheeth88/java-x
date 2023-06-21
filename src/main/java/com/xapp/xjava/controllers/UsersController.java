@@ -43,8 +43,8 @@ public class UsersController {
     }
 
     @GetMapping("/{userId}")
-    ResponseEntity<Optional<User>> getUser(@PathVariable("userId") Long userId) {
-        Optional<User> user = usersService.getUser(userId);
+    ResponseEntity<User> getUser(@PathVariable("userId") Long userId) {
+        User user = usersService.getUser(userId);
         return ResponseEntity.ok(user);
     }
 

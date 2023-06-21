@@ -40,9 +40,8 @@ public class UsersService {
     }
 
     // ----------------- get user by User Id
-    public Optional<User> getUser(Long userId) {
-        Optional<User> user = usersRepository.findById(userId);
-        // UserEntity user = usersRepository.findByUserId();
+    public User getUser(Long userId) {
+        User user = usersRepository.findById(userId).get();
         return user;
     }
 
@@ -59,9 +58,7 @@ public class UsersService {
 
     // ------------------------- Edit User
     public User editUser(Long userId, User user) {
-        Optional<User> currentUserOp = getUser(userId);
-        if (currentUserOp.isPresent()) {
-            User currentUser = currentUserOp.get();
+        User currentUser = getUser(userId); 
             currentUser.setUserName(user.getUserName());
             currentUser.setDateOfBirth(user.getDateOfBirth());
             currentUser.setEmail(user.getEmail());
@@ -69,9 +66,6 @@ public class UsersService {
             currentUser.setRoles(user.getRoles());
             User modifiedUser = createUser(currentUser);
             return modifiedUser;
-        }
-        return null;
-
     }
 
     // -------------------------------- Delete User
