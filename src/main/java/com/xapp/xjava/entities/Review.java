@@ -1,5 +1,10 @@
 package com.xapp.xjava.entities;
 
+
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +31,8 @@ public class Review {
 
 	private String reviewBy;
 
+	private ZonedDateTime reviewTime;
+
 	// @ManyToOne(cascade = CascadeType.ALL)
 	// @JoinColumn(name="movie_id", referencedColumnName = "movieId")
 	private Long movieId;
@@ -33,5 +40,8 @@ public class Review {
 	// @ManyToOne(cascade = CascadeType.ALL)
 	// @JoinColumn(name = "user_id", referencedColumnName = "UserId" )
 	private Long userId;
+
+    public void setTime(LocalDate now) {
+    }
 
 }

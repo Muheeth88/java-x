@@ -1,5 +1,6 @@
 package com.xapp.xjava.services;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,12 +30,12 @@ public class ReviewService {
 			review.setTitle(reviewrReq.getTitle());
 			review.setComment(reviewrReq.getComment());
 			review.setUserId(userId);
+			review.setReviewTime(ZonedDateTime.now());
 			return reviewRepository.save(review);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-
 	}
 
 	public Review editReview(Long userId, Long reviewId, EditReviewReq req) throws Exception {
@@ -50,7 +51,7 @@ public class ReviewService {
 				System.out.println("Not Your comment!!!");
 				return new Review();
 			}
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			System.out.println("Something went wrong");
 		}
 		return null;
@@ -72,7 +73,6 @@ public class ReviewService {
 		} catch (Exception e) {
 				System.out.println("Something Went Wrong In Optional");
 		}
-
 		return null;
 	}
 
